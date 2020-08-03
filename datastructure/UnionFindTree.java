@@ -34,7 +34,7 @@ public class UnionFindTree {
     }
 
     /**
-     * 元 {@code x} が属する集合の代表を答える．
+     * 元 {@code x} が属する集合の代表を amortized O(α(N)) で答える．
      * @param x 代表を求めたい元
      * @return {@code x} が属する集合の代表
      */
@@ -45,9 +45,9 @@ public class UnionFindTree {
     }
 
     /**
-     * 元 {@code x} が属する集合と元 {@code y} が属する集合を merge する．
-     * @param x 元
-     * @param y 元
+     * 元 {@code x} が属する集合と元 {@code y} が属する集合を amortized O(α(N)) で merge する．
+     * @param x
+     * @param y
      * @return 元々同じ集合に属していれば {@code false}，そうでなければ {@code true}
      */
     public boolean unite(int x, int y) {
@@ -63,12 +63,63 @@ public class UnionFindTree {
     }
 
     /**
-     * 元 {@code x} と元 {@code y} が属する集合が同じであるかを判定する
-     * @param x 元
-     * @param y 元
+     * 元 {@code x} と元 {@code y} が属する集合が同じであるかを amortized O(α(N)) で判定する
+     * @param x
+     * @param y
      * @return 同じ集合に属していれば {@code true}，そうでなければ {@code false}
      */
     public boolean isSame(int x, int y) {
         return root(x) == root(y);
+    }
+
+    /**
+     * 元 {@code x} が属する集合のサイズを amortized O(α(N)) で求める．
+     * @param x
+     * @return 元 {@code x} が属する集合のサイズ
+     */
+    public int size(int x) {
+        return -Dat[root(x)];
+    }
+
+    /***************************** DEBUG *********************************/
+
+    @Override
+    public String toString() {
+        final int N = Dat.length;
+        StringBuilder sb = new StringBuilder();
+        boolean exi = false;
+        for (int i = 0; i < N; i++) {
+            if (Dat[i] < 0) {
+                if (exi) sb.append('\n');
+                sb.append(String.format("Size = %d Root = %d : ", -Dat[i], i));
+                boolean exj = false;
+                for (int j = 0; j < N; j++) {
+                    if (Dat[j] == i) {
+                        if (exj) sb.append(", ");
+                        sb.append(j);
+                        exj = true;
+                    }
+                }
+                exi = true;
+            }
+        }
+        return sb.toString();
+    }
+
+    /******* Usage *******/
+    
+    public static void main(String[] args) {
+        UnionFindTree t = new UnionFindTree(7);
+        System.out.println("Before");
+        System.out.println(t);
+        t.unite(2, 4);
+        t.unite(1, 6);
+        t.unite(2, 0);
+        System.out.println("\nAfter");
+        System.out.println(t);
+        System.out.println();
+        for (int i = 0; i < 7; i++) {
+            System.out.printf("size(%d) = %d\n", i, t.size(i));
+        }
     }
 }
