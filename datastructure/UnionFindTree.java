@@ -91,15 +91,16 @@ public class UnionFindTree {
         for (int i = 0; i < N; i++) {
             if (Dat[i] < 0) {
                 if (exi) sb.append('\n');
-                sb.append(String.format("Size = %d Root = %d : ", -Dat[i], i));
+                sb.append(String.format("Size = %d Root = %d Elements = {", -Dat[i], i));
                 boolean exj = false;
                 for (int j = 0; j < N; j++) {
-                    if (Dat[j] == i) {
+                    if (root(j) == i) {
                         if (exj) sb.append(", ");
                         sb.append(j);
                         exj = true;
                     }
                 }
+                sb.append('}');
                 exi = true;
             }
         }
