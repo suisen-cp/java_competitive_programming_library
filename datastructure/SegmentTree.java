@@ -146,6 +146,7 @@ public class SegmentTree<T> {
     }
 
     /******* Usage *******/
+    
     public static void main(String[] args) {
         Integer[] a = {0, 1, 2, 3, 4, 5};
         SegmentTree<Integer> t = new SegmentTree<>(a, 0, Integer::sum);
