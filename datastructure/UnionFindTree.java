@@ -20,7 +20,7 @@ public class UnionFindTree {
     /**
      * 各要素に関するデータをこの配列一つで管理する．
      * もし Dat[i] < 0 であれば，i　が属する集合の大きさは -Dat[i] であり，i が属する集合の代表 (root) は i である．
-     * Dat[i] >= 0 であれば，i が属する集合の代表 (root) は Dat[i] である．
+     * Dat[i] >= 0 であれば，i の親は Dat[i] である．
      */
     final int[] Dat;
 
