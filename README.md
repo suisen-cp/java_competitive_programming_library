@@ -6,7 +6,17 @@ author: <https://atcoder.jp/users/suisen>
 
 また，このライブラリは観賞用の側面が大きいので抽象化を行っているものが多いです．そのため，速度面では特定の用途に特化したコードよりも劣るものも多いことをご了承ください．特に，auto-boxing/unboxing を避けるために primitive type に特化するだけで見違えるほど速くなるものも多いです．(もし余裕が出来れば primitive type 特化のコードも上げていくかもしれません．)
 
+## package `collection`
+
+`Java` の Collections Framework を簡易的に再現したクラス群．primitive type 特化などの改造を行うことを想定している．
+
+|class|対応する `java.util` package の class|備考|
+|-|-|-|
+|[Deque](./collection/Deque.java)|`ArrayDeque`|`ArrayDeque` はランダムアクセスを定数時間で行うことはできないが，`Deque` ではこれが可能．|
+
 ## package `datastructure`
+
+データ構造のまとめ．
 
 |class|概要|
 |-|-|
