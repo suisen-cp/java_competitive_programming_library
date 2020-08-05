@@ -1,3 +1,8 @@
 .vscode
-Main.java
+
 *.sh
+
+Main.java
+
+sort
+debug
