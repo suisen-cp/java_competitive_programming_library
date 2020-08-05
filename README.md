@@ -21,6 +21,7 @@ author: <https://atcoder.jp/users/suisen>
 |class|概要|
 |-|-|
 |[FenwickTree](./datastructure/FenwickTree.java)|列に対する一点更新および二項演算による区間畳み込みをそれぞれ対数時間で行うデータ構造．一般的に `SegmentTree` よりも定数倍が軽い．|
+|[LazySegmentTree](./datastructure/LazySegmentTree.java)|列に対する区間作用および二項演算による区間畳み込みをそれぞれ対数時間で行うデータ構造．機能的には `SegmentTree` の上位互換であるが，定数倍が結構重い．一点更新は未実装．|
 |[SegmentTree](./datastructure/SegmentTree.java)|列に対する一点更新および二項演算による区間畳み込みをそれぞれ対数時間で行うデータ構造．|
 |[SparseTable](./datastructure/SparseTable.java)|サイズ N の静的な列に対して，冪等律および結合律を満たす二項演算による区間畳み込みを前計算 &Theta;(NlogN)，クエリ &Theta;(1) で行うデータ構造．前計算を保存するので空間計算量は &Theta;(NlogN)．|
 |[UnionFindTree](./datastructure/UnionFindTree.java)|素集合を素集合森を用いて管理するデータ構造．素集合森において，2 つの要素が属する木の merge 操作，ある要素が属する木の根を求めるクエリ処理をそれぞれ「ほぼ」償却定数時間で行うことが出来る．|

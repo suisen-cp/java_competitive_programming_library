@@ -135,13 +135,10 @@ public class SegmentTree<T> {
     }
 
     private String toString(int k, int space) {
-        if (k >= N) return " ".repeat(space) + Dat[k].toString();
         String s = "";
-        s += toString(k << 1 | 1, space + 3);
-        s += "\n";
+        if (k < N) s += toString(k << 1 | 1, space + 3) + "\n";
         s += " ".repeat(space) + Dat[k].toString();
-        s += "\n";
-        s += toString(k << 1 | 0, space + 3);
+        if (k < N) s += "\n" + toString(k << 1 | 0, space + 3);
         return s;
     }
 
