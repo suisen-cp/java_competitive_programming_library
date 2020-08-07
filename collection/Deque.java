@@ -193,36 +193,10 @@ public class Deque<T> implements Iterable<T>, RandomAccess {
     }
 
     /**
-     * Deque の要素を全て削除する．容量は変化しない．
-     */
-    public void removeAll() {
-        head = tail = 0;
-    }
-
-    /**
-     * Deque の要素を全て削除し，容量を変更する．
-     * @param capaacity 変更後の容量
-     */
-    public void clear(int capacity) {
-        if (capacity <= 0) {
-            throw new IllegalArgumentException(
-                String.format("Capacity %d is negative.", capacity)
-            );
-        }
-        head = tail = 0;
-        this.len = 1;
-        while (this.len < capacity) {
-            this.len <<= 1;
-        }
-        this.mask = this.len - 1;
-        this.buf = (T[]) new Object[len];
-    }
-
-    /**
-     * Deque の要素を全て削除し，容量をデフォルトの容量 {@code DEFAULT_CAPACITY = 64} に変更する．
+     * Deque の要素を全て削除する．
      */
     public void clear() {
-        clear(DEFAULT_CAPACITY);
+        head = tail = 0;
     }
 
     /**
@@ -307,7 +281,7 @@ public class Deque<T> implements Iterable<T>, RandomAccess {
         dq.addFirst(0);
         dq.addFirst(-1);
         System.out.println(dq);
-        dq.removeAll();
+        dq.clear();
         System.out.println(dq);
         System.out.println(dq.pollFirst()); // => null
         // System.out.println(dq.removeFirst()); => NoSuchElementException
