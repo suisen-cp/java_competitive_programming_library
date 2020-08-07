@@ -13,6 +13,7 @@ author: <https://atcoder.jp/users/suisen>
 |class|対応する `java.util` package の class|備考|
 |-|-|-|
 |[Deque](./collection/Deque.java)|`ArrayDeque`|`ArrayDeque` はランダムアクセスを定数時間で行うことはできないが，`Deque` ではこれが可能．|
+|[PriorityQueue](./collection/PriorityQueue.java)|`PriorityQueue`|標準ライブラリよりも僅かに遅いが，問題ない程度．`int` や `long` 特化に書き換えて初めて真価を発揮する．|
 
 ## package `datastructure`
 
