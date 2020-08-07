@@ -34,6 +34,11 @@ public class LongLazySegmentTree {
     final int N;
 
     /**
+     * 元々の列のサイズ．配列外参照を検知するために用いる．
+     */
+    final int L;
+
+    /**
      * クエリ側の二項演算の単位元
      */
     final long E0;
@@ -95,6 +100,7 @@ public class LongLazySegmentTree {
         this.Dat = new long[k << 1];
         this.Laz = new long[k << 1];
         this.N = k;
+        this.L = n;
         Arrays.fill(Dat, E0);
         Arrays.fill(Laz, E1);
     }
@@ -118,7 +124,7 @@ public class LongLazySegmentTree {
      * 通常のセグ木と同様にして配列を元に O(N) で Dat を構築する．
      * @param src
      */
-    private void build(long[] src) {
+    void build(long[] src) {
         System.arraycopy(src, 0, Dat, N, src.length);
         for (int i = N - 1; i > 0; i--) Dat[i] = F.applyAsLong(Dat[i << 1 | 0], Dat[i << 1 | 1]);
     }
@@ -130,6 +136,11 @@ public class LongLazySegmentTree {
      * @param v 作用素
      */
     public void apply(int l, int r, long v) {
+        if (l < 0 || l > L || r < 0 || r > L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
+            );
+        }
         if (l >= r) return;
         int m = updown(l, r);
         l += N; r += N;
@@ -149,6 +160,11 @@ public class LongLazySegmentTree {
      * @return i 番目の値
      */
     public long get(int i) {
+        if (i < 0 || i >= L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Index %d is not in [%d, %d)", i, 0, L)
+            );
+        }
         int k = 1;
         int l = 0, r = N;
         while (k < N) {
@@ -169,6 +185,11 @@ public class LongLazySegmentTree {
      * @return 畳み込みの結果
      */
     public long fold(int l, int r) {
+        if (l < 0 || l > L || r < 0 || r > L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
+            );
+        }
         if (l >= r) return E0;
         updown(l, r);
         long resL = E0, resR = E0;
@@ -186,8 +207,7 @@ public class LongLazySegmentTree {
      * @param r 半開区間の右端 (含まれない)
      * @return 列挙した区間の数
      */
-    private int updown(int l, int r) {
-        if (l >= r) return 0;
+    int updown(int l, int r) {
         int i = 0;
         int kl = l + N, kr = r + N;
         for (int x = kl / (kl & -kl) >> 1, y = kr / (kr & -kr) >> 1; 0 < kl && kl < kr; kl >>= 1, kr >>= 1) {
@@ -205,7 +225,7 @@ public class LongLazySegmentTree {
      * @param k 木上の index (1-indexed)
      * @return Dat[k]
      */
-    private long calcDat(int k) {
+    long calcDat(int k) {
         long lz = Laz[k];
         if (lz != E1) {
             int w = N / Integer.highestOneBit(k);
@@ -227,7 +247,7 @@ public class LongLazySegmentTree {
         return toString(1, 0);
     }
 
-    private String toString(int k, int space) {
+    String toString(int k, int space) {
         String s = "";
         if (k < N) s += toString(k << 1 | 1, space + 6) + "\n";
         s += " ".repeat(space) + Dat[k] + "/" + Laz[k];

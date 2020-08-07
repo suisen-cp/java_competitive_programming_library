@@ -43,6 +43,11 @@ public class LazySegmentTree<T, U> {
     final int N;
 
     /**
+     * 元々の列のサイズ．配列外参照を検知するために用いる．
+     */
+    final int L;
+
+    /**
      * クエリ側の二項演算の単位元
      */
     final T E0;
@@ -58,7 +63,7 @@ public class LazySegmentTree<T, U> {
     final BinaryOperator<T> F;
 
     /**
-     * 作用素 (作用側の関数)
+     * 作用
      */
     final BiFunction<T, U, T> G;
 
@@ -104,6 +109,7 @@ public class LazySegmentTree<T, U> {
         this.Dat = (T[]) new Object[k << 1];
         this.Laz = (U[]) new Object[k << 1];
         this.N = k;
+        this.L = n;
         Arrays.fill(Dat, E0);
         Arrays.fill(Laz, E1);
     }
@@ -127,7 +133,7 @@ public class LazySegmentTree<T, U> {
      * 通常のセグ木と同様にして配列を元に O(N) で Dat を構築する．
      * @param src
      */
-    private void build(T[] src) {
+    void build(T[] src) {
         System.arraycopy(src, 0, Dat, N, src.length);
         for (int i = N - 1; i > 0; i--) Dat[i] = F.apply(Dat[i << 1 | 0], Dat[i << 1 | 1]);
     }
@@ -139,6 +145,11 @@ public class LazySegmentTree<T, U> {
      * @param v 作用素
      */
     public void apply(int l, int r, U v) {
+        if (l < 0 || l > L || r < 0 || r > L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
+            );
+        }
         if (l >= r) return;
         int m = updown(l, r);
         l += N; r += N;
@@ -158,6 +169,11 @@ public class LazySegmentTree<T, U> {
      * @return i 番目の値
      */
     public T get(int i) {
+        if (i < 0 || i >= L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Index %d is not in [%d, %d)", i, 0, L)
+            );
+        }
         int k = 1;
         int l = 0, r = N;
         while (k < N) {
@@ -178,6 +194,11 @@ public class LazySegmentTree<T, U> {
      * @return 畳み込みの結果
      */
     public T fold(int l, int r) {
+        if (l < 0 || l > L || r < 0 || r > L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
+            );
+        }
         if (l >= r) return E0;
         updown(l, r);
         T resL = E0, resR = E0;
@@ -195,8 +216,7 @@ public class LazySegmentTree<T, U> {
      * @param r 半開区間の右端 (含まれない)
      * @return 列挙した区間の数
      */
-    private int updown(int l, int r) {
-        if (l >= r) return 0;
+    int updown(int l, int r) {
         int i = 0;
         int kl = l + N, kr = r + N;
         for (int x = kl / (kl & -kl) >> 1, y = kr / (kr & -kr) >> 1; 0 < kl && kl < kr; kl >>= 1, kr >>= 1) {
@@ -214,7 +234,7 @@ public class LazySegmentTree<T, U> {
      * @param k 木上の index (1-indexed)
      * @return Dat[k]
      */
-    private T calcDat(int k) {
+    T calcDat(int k) {
         U lz = Laz[k];
         if (lz != E1) {
             int w = N / Integer.highestOneBit(k);
@@ -236,7 +256,7 @@ public class LazySegmentTree<T, U> {
         return toString(1, 0);
     }
 
-    private String toString(int k, int space) {
+    String toString(int k, int space) {
         String s = "";
         if (k < N) s += toString(k << 1 | 1, space + 6) + "\n";
         s += " ".repeat(space) + Dat[k].toString() + "/" + Laz[k].toString();

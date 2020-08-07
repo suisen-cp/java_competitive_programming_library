@@ -92,7 +92,7 @@ public class LongSegmentTree {
      * @return 半開区間 [l, r) の要素を二項演算 {@code F} で畳み込んだ結果
      */
     public long fold(int l, int r) {
-        if (l < 0 || r > L) {
+        if (l < 0 || l > L || r < 0 || r > L) {
             throw new IndexOutOfBoundsException(
                 String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
             );
