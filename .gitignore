@@ -1,8 +1,10 @@
+# vscode
 .vscode
 
-*.sh
-
+# test
 Main.java
-
-sort
 debug
+
+# not verified
+datastructure/RandomizedBinary*
+sort
