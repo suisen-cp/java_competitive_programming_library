@@ -135,11 +135,7 @@ public class IntLazySegmentTree {
      * @param v 作用素
      */
     public void apply(int l, int r, int v) {
-        if (l < 0 || l > L || r < 0 || r > L) {
-            throw new IndexOutOfBoundsException(
-                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
-            );
-        }
+        rangeCheck(l, r);
         if (l >= r) return;
         int m = updown(l, r);
         l += N; r += N;
@@ -159,11 +155,7 @@ public class IntLazySegmentTree {
      * @return i 番目の値
      */
     public int get(int i) {
-        if (i < 0 || i >= L) {
-            throw new IndexOutOfBoundsException(
-                String.format("Index %d is not in [%d, %d)", i, 0, L)
-            );
-        }
+        rangeCheck(i);
         int k = 1;
         int l = 0, r = N;
         while (k < N) {
@@ -184,11 +176,7 @@ public class IntLazySegmentTree {
      * @return 畳み込みの結果
      */
     public int fold(int l, int r) {
-        if (l < 0 || l > L || r < 0 || r > L) {
-            throw new IndexOutOfBoundsException(
-                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
-            );
-        }
+        rangeCheck(l, r);
         if (l >= r) return E0;
         updown(l, r);
         int resL = E0, resR = E0;
@@ -237,6 +225,22 @@ public class IntLazySegmentTree {
             Laz[k] = E1;
         }
         return Dat[k];
+    }
+
+    void rangeCheck(int i) {
+        if (i < 0 || i >= L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Index %d out of bounds for length %d", i, L)
+            );
+        }
+    }
+
+    void rangeCheck(int l, int r) {
+        if (l < 0 || l > L || r < 0 || r > L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
+            );
+        }
     }
 
     /***************************** DEBUG *********************************/

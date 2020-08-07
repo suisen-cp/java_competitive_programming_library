@@ -105,11 +105,7 @@ public class LongDualSegmentTree {
      * @param v 作用素
      */
     public void apply(int l, int r, long v) {
-        if (l < 0 || l > L || r < 0 || r > L) {
-            throw new IndexOutOfBoundsException(
-                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
-            );
-        }
+        rangeCheck(l, r);
         if (l >= r) return;
         updown(l, r);
         l += N; r += N;
@@ -125,11 +121,7 @@ public class LongDualSegmentTree {
      * @return i 番目の値
      */
     public long get(int i) {
-        if (i < 0 || i >= L) {
-            throw new IndexOutOfBoundsException(
-                String.format("Index %d is not in [%d, %d)", i, 0, L)
-            );
-        }
+        rangeCheck(i);
         int k = 1;
         int l = 0, r = N;
         while (k < N) {
@@ -177,6 +169,22 @@ public class LongDualSegmentTree {
                 Dat[k - N] = G.applyAsLong(Dat[k - N], lz);
             }
             Laz[k] = E1;
+        }
+    }
+
+    void rangeCheck(int i) {
+        if (i < 0 || i >= L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Index %d out of bounds for length %d", i, L)
+            );
+        }
+    }
+
+    void rangeCheck(int l, int r) {
+        if (l < 0 || l > L || r < 0 || r > L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
+            );
         }
     }
 

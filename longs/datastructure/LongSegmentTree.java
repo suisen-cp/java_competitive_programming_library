@@ -92,11 +92,7 @@ public class LongSegmentTree {
      * @return 半開区間 [l, r) の要素を二項演算 {@code F} で畳み込んだ結果
      */
     public long fold(int l, int r) {
-        if (l < 0 || l > L || r < 0 || r > L) {
-            throw new IndexOutOfBoundsException(
-                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
-            );
-        }
+        rangeCheck(l, r);
         l += N; r += N;
         long resL = E, resR = E;
         while (l < r) {
@@ -113,16 +109,28 @@ public class LongSegmentTree {
      * @param f {@code i} 番目の要素に作用させる関数
      */
     public void update(int i, LongUnaryOperator f) {
-        if (i < 0 || i >= L) {
-            throw new IndexOutOfBoundsException(
-                String.format("Index %d is not in [%d, %d)", i, 0, L)
-            );
-        }
+        rangeCheck(i);
         i += N;
         Dat[i] = f.applyAsLong(Dat[i]);
         while (i > 0) {
             i >>= 1;
             Dat[i] = F.applyAsLong(Dat[i << 1 | 0], Dat[i << 1 | 1]);
+        }
+    }
+
+    void rangeCheck(int i) {
+        if (i < 0 || i >= L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Index %d out of bounds for length %d", i, L)
+            );
+        }
+    }
+
+    void rangeCheck(int l, int r) {
+        if (l < 0 || l > L || r < 0 || r > L) {
+            throw new IndexOutOfBoundsException(
+                String.format("Segment [%d, %d) is not in [%d, %d)", l, r, 0, L)
+            );
         }
     }
 
