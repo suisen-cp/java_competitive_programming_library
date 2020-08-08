@@ -28,6 +28,14 @@ author: <https://atcoder.jp/users/suisen>
 |[SparseTable](./datastructure/SparseTable.java)|サイズ N の静的な列に対して，冪等律および結合律を満たす二項演算による区間畳み込みを前計算 &Theta;(NlogN)，クエリ &Theta;(1) で行うデータ構造．前計算を保存するので空間計算量は &Theta;(NlogN)．|
 |[UnionFindTree](./datastructure/UnionFindTree.java)|素集合を素集合森を用いて管理するデータ構造．素集合森において，2 つの要素が属する木の merge 操作，ある要素が属する木の根を求めるクエリ処理をそれぞれ「ほぼ」償却定数時間で行うことが出来る．|
 
+## package `integer`
+
+整数論関連のパッケージ．
+
+|class|概要|
+|-|-|
+|[ModArithmetic](./integer/ModArithmetic.java)|剰余演算関連をまとめたクラス．乗法逆元の計算や二分累乗法などの実装を含む．|
+
 ## package `ints`
 
 主に `datastructure` package や `collection` package を `int` 型特化に書き換えたものです．boxing が走らないのでかなり定数倍が高速になり，メモリ使用量も削減されます．
