@@ -34,6 +34,7 @@ author: <https://atcoder.jp/users/suisen>
 
 |class|概要|
 |-|-|
+|[DiscreteLogarithm](./integer/DiscreteLogarithm.java)|離散対数問題を解くクラス．剰余の法を P として計算量は &Theta;(&Sqrt;P)．|
 |[ModArithmetic](./integer/ModArithmetic.java)|剰余演算関連をまとめたクラス．乗法逆元の計算や二分累乗法などの実装を含む．|
 
 ## package `ints`
