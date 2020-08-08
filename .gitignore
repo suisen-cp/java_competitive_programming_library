@@ -2,10 +2,11 @@
 .vscode
 
 # test
-Test.java
+*Test.java
 Main.java
 debug
 
 # not verified
 datastructure/RandomizedBinary*
+ints/collection/IntArrayList*
 sort
