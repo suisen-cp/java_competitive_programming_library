@@ -21,9 +21,11 @@ author: <https://atcoder.jp/users/suisen>
 
 |class|概要|
 |-|-|
+|[ConvexHullTrick](./datastructure/ConvexHullTrick.java)|直線の集合 L に対して，直線 ax+b を L に追加する操作と，座標 x に対して L の中で最小値 (/最大値) を取る直線の値を求める操作の2種類のクエリを処理することができる．本ライブラリの実装では，N 本の直線追加と Q 回の最小値 (/最大値) クエリを O(NlogN+Q(logN)^2) で行うことが出来る．|
 |[DualSegmentTree](./datastructure/DualSegmentTree.java)|列に対する区間作用および一点取得をそれぞれ対数時間で行うデータ構造．遅延セグメント木よりも機能は制限されているが，その分定数倍が高速．|
 |[FenwickTree](./datastructure/FenwickTree.java)|列に対する一点更新および二項演算による区間畳み込みをそれぞれ対数時間で行うデータ構造．一般的に `SegmentTree` よりも定数倍が軽い．|
 |[LazySegmentTree](./datastructure/LazySegmentTree.java)|列に対する区間作用および二項演算による区間畳み込みをそれぞれ対数時間で行うデータ構造．機能的には `SegmentTree` の上位互換であるが，定数倍が結構重い．一点更新は未実装．|
+|[MonotoneConvexHullTrick](./datastructure/MonotoneConvexHullTrick.java)|`ConvexHullTrick` において，追加する直線の傾きが広義単調増加 (/広義単調減少) である場合にはクエリの処理を高速化することが出来る．本ライブラリの実装では，N 本の (単調に傾きの値が変化する) 直線の追加と Q 回の最小値 (/最大値) クエリを O(N+QlogN) で行うことが出来る．|
 |[SegmentTree](./datastructure/SegmentTree.java)|列に対する一点更新および二項演算による区間畳み込みをそれぞれ対数時間で行うデータ構造．|
 |[SparseTable](./datastructure/SparseTable.java)|サイズ N の静的な列に対して，冪等律および結合律を満たす二項演算による区間畳み込みを前計算 &Theta;(NlogN)，クエリ &Theta;(1) で行うデータ構造．前計算を保存するので空間計算量は &Theta;(NlogN)．|
 |[UnionFindTree](./datastructure/UnionFindTree.java)|素集合を素集合森を用いて管理するデータ構造．素集合森において，2 つの要素が属する木の merge 操作，ある要素が属する木の根を求めるクエリ処理をそれぞれ「ほぼ」償却定数時間で行うことが出来る．|
@@ -37,14 +39,22 @@ author: <https://atcoder.jp/users/suisen>
 |[DiscreteLogarithm](./integer/DiscreteLogarithm.java)|離散対数問題を解くクラス．剰余の法を P として計算量は &Theta;(&Sqrt;P)．|
 |[ModArithmetic](./integer/ModArithmetic.java)|剰余演算関連をまとめたクラス．乗法逆元の計算や二分累乗法などの実装を含む．|
 
+## package `util`
+
+`Pair` 等のユーティリティクラスのパッケージ．アルゴリズム / データ構造の実装の際に補助的に用いる程度．
+
 ## package `ints`
 
-主に `datastructure` package や `collection` package を `int` 型特化に書き換えたものです．boxing が走らないのでかなり定数倍が高速になり，メモリ使用量も削減されます．
+主に `datastructure` package や `collection` package を `int` 型特化に書き換えたクラス群．boxing が走らないのでかなり定数倍が高速になり，メモリ使用量の削減も期待される．
 
-中身はジェネリクスを用いて書かれたものと同じなので説明は省略します．
+ジェネリクスを用いて書かれたものと同じクラスの説明は省略．
 
 ## package `longs`
 
-主に `datastructure` package や `collection` package を `long` 型特化に書き換えたものです．boxing が走らないのでかなり定数倍が高速になり，メモリ使用量も削減されます．
+主に `datastructure` package や `collection` package を `long` 型特化に書き換えたクラス群．boxing が走らないのでかなり定数倍が高速になり，メモリ使用量の削減も期待される．
 
-中身はジェネリクスを用いて書かれたものと同じなので説明は省略します．
+ジェネリクスを用いて書かれたものと同じクラスの説明は省略．
+
+|class|概要|
+|-|-|
+|[LongOrderedMap](./longs/datastructure/LongOrderedMap.java)|Randomized Binary Search Tree (RBST) による平衡二分探索木の実装．標準ライブラリの `java.util.TreeMap` ではサポートされていない，k 番目の要素取得や木の merge / split 操作をサポートしている．|
