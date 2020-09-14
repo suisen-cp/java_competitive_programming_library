@@ -6,12 +6,12 @@ package graph;
 class MaxFlow {
     private static final long INF = Long.MAX_VALUE;
 
-    private final Digraph<CapEdge> dig;
+    private final Digraph<? extends CapEdge> dig;
     private final int n;
     private final int[] count;
     private final CapEdge[][] g;
 
-    public MaxFlow(Digraph<CapEdge> capDiraph) {
+    public MaxFlow(Digraph<? extends CapEdge> capDiraph) {
         this.dig = capDiraph;
         this.n = capDiraph.getV();
         this.count = new int[n];

@@ -40,6 +40,8 @@ author: <https://atcoder.jp/users/suisen>
 |[BellmanFord](./graph/BellmanFord.java)|ベルマンフォード法により単一始点最短経路問題 (SSSP) を解く．辺の重みが負であってもよい．頂点数を N，辺数を M として 計算量は &Theta;(MN)．|
 |[Dijkstra](./graph/Dijkstra.java)|ダイクストラ法により単一始点最短経路問題 (SSSP) を解く．但し，辺の重みが負であってはならない．頂点数を N，辺数を M として 計算量は &Theta;((M+N)logN)．|
 |[Graph](./graph/Graph.java)|グラフを表現するための基本的なクラスのまとめ．|
+|[MaxFlow](./graph/MaxFlow.java)|最大流問題を解きます．Ford Fulkerson のアルゴリズムと Dinic のアルゴリズムが実装されています．<br>Ford Fulkerson の計算量は，流量を F，辺数を E として &Theta;(FE) です．<br>Dinic の計算量は，頂点数を V，辺数を E とすると，一般の場合では O(EV^2) です．ただし，多くのケースでは高速に動作します．また，二部グラフや容量一定のグラフではオーダーレベルで計算量が改善されます．|
+|[MinCostFlow](./graph/MinCostFlow.java)|最小費用流問題を Primal-Dual 法により解きます．本実装では負辺に対応していません．計算量は，流量 F，頂点数 V，辺数 E として &Theta;(F(V+E)logV) です．|
 |[Kruskal](./graph/Kruskal.java)|クラスカル法により最小全域木 (MST) を構築する．頂点数を N，辺数を M として 計算量は &Theta;(MlogN)．|
 |[Prim](./graph/Prim.java)|プリム法により最小全域木 (MST) を構築する．頂点数を N，辺数を M として 計算量は &Theta;(MlogN)．|
 |[SCC](./graph/SCC.java)|強連結成分分解を行う．頂点数を N，辺数を M として 計算量は &Theta;(N+M)．|

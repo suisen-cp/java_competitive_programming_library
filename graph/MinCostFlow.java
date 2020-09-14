@@ -6,7 +6,7 @@ package graph;
 class MinCostFlow {
     private static final long INF = Long.MAX_VALUE;
 
-    private final Digraph<CapEdge> dig;
+    private final Digraph<? extends CapEdge> dig;
     private final int n;
     private final int[] count;
     private final CapEdge[][] g;
@@ -15,7 +15,7 @@ class MinCostFlow {
     private final long[] dist;
     private final CapEdge[] prev;
 
-    public MinCostFlow(Digraph<CapEdge> capDiraph) {
+    public MinCostFlow(Digraph<? extends CapEdge> capDiraph) {
         this.dig = capDiraph;
         this.n = capDiraph.getV();
         this.count = new int[n];
