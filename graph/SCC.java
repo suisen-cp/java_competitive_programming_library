@@ -2,16 +2,14 @@ package graph;
 /**
  * @verified
  * - https://atcoder.jp/contests/practice2/tasks/practice2_g
- * 
- * @param <Edg> type of edge
  */
-class SCC<Edg extends AbstractEdge> {
+class SCC {
     final int n;
     final int m;
     final int[] ids;
     final int[][] groups;
 
-    public SCC(Digraph<Edg> g) {
+    public SCC(Digraph<? extends AbstractEdge> g) {
         this.n = g.getV();
         this.m = g.getE();
         this.ids = new int[n];
@@ -30,7 +28,7 @@ class SCC<Edg extends AbstractEdge> {
         return ids[i];
     }
 
-    private int[][] build(Digraph<Edg> g) {
+    private int[][] build(Digraph<? extends AbstractEdge> g) {
         int nowOrd = 0;
         int groupNum = 0;
         int k = 0;

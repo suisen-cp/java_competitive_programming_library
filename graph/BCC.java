@@ -2,10 +2,8 @@ package graph;
 /**
  * @verified
  * - https://atcoder.jp/contests/arc039/tasks/arc039_d
- * 
- * @param <Edg> type of edge
  */
-class BCC<Edg extends AbstractEdge> {
+class BCC {
     final int n;
     final int m;
     final int[] ids;
@@ -15,7 +13,7 @@ class BCC<Edg extends AbstractEdge> {
     final int[] low;
     final int[] ord;
 
-    public BCC(AbstractGraph<Edg> g) {
+    public BCC(AbstractGraph<? extends AbstractEdge> g) {
         this.n = g.getV();
         this.m = g.getE();
         this.ids = new int[n];
@@ -41,7 +39,7 @@ class BCC<Edg extends AbstractEdge> {
         return ids[i];
     }
 
-    private int[][] build(AbstractGraph<Edg> g) {
+    private int[][] build(AbstractGraph<? extends AbstractEdge> g) {
         lowLink(g);
         java.util.Arrays.fill(ids, -1);
         int groupNum = 0;
@@ -53,7 +51,7 @@ class BCC<Edg extends AbstractEdge> {
             stack[ptr++] = i;
             while (ptr > 0) {
                 int u = stack[--ptr];
-                for (Edg e : g.getEdges(u)) {
+                for (AbstractEdge e : g.getEdges(u)) {
                     int v = e.to;
                     if (u != par[v]) continue;
                     stack[ptr++] = v;
@@ -80,7 +78,7 @@ class BCC<Edg extends AbstractEdge> {
         return groups;
     }
 
-    private void lowLink(AbstractGraph<Edg> g) {
+    private void lowLink(AbstractGraph<? extends AbstractEdge> g) {
         int nowOrd = 0;
         java.util.Arrays.fill(ord, -1);
         long[] stack = new long[n];
