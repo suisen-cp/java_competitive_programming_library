@@ -10,8 +10,8 @@ import java.util.Optional;
 import java.util.PrimitiveIterator;
 import java.util.Set;
 
-import util.MutablePair;
-import util.primitive.pair.IntObjEntry;
+import util.Pair;
+import util.primitive.pair.IntObjPair;
 import util.primitive.pair.LongObjEntry;
 
 /**
@@ -89,7 +89,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
      * @throws IndexOutOfBoundsException {@code k < 0 || k > N} の場合
      */
     public LongOrderedMap<V> splitRightUsingIndex(int k) {
-        MutablePair<RBST<V>, RBST<V>> p = RBST.splitUsingIndex(root, k);
+        Pair<RBST<V>, RBST<V>> p = RBST.splitUsingIndex(root, k);
         LongOrderedMap<V> fst = new LongOrderedMap<>(p.getFirst());
         root = fst.root;
         LongOrderedMap<V> snd = new LongOrderedMap<>(p.getSecond());
@@ -103,7 +103,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
      * @throws IndexOutOfBoundsException {@code k < 0 || k > N} の場合
      */
     public LongOrderedMap<V> splitLeftUsingIndex(int k) {
-        MutablePair<RBST<V>, RBST<V>> p = RBST.splitUsingIndex(root, k);
+        Pair<RBST<V>, RBST<V>> p = RBST.splitUsingIndex(root, k);
         LongOrderedMap<V> fst = new LongOrderedMap<>(p.getFirst());
         LongOrderedMap<V> snd = new LongOrderedMap<>(p.getSecond());
         root = snd.root;
@@ -116,7 +116,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
      * @return 右側の木を切り離して返り値とする．(自分は左側の木となる)
      */
     public LongOrderedMap<V> splitRightUsingKey(long key) {
-        MutablePair<RBST<V>, RBST<V>> p = RBST.splitUsingKey(root, key);
+        Pair<RBST<V>, RBST<V>> p = RBST.splitUsingKey(root, key);
         LongOrderedMap<V> fst = new LongOrderedMap<>(p.getFirst());
         root = fst.root;
         LongOrderedMap<V> snd = new LongOrderedMap<>(p.getSecond());
@@ -129,7 +129,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
      * @return 左側の木を切り離して返り値とする．(自分は右側の木となる)
      */
     public LongOrderedMap<V> splitLeftUsingKey(long key) {
-        MutablePair<RBST<V>, RBST<V>> p = RBST.splitUsingKey(root, key);
+        Pair<RBST<V>, RBST<V>> p = RBST.splitUsingKey(root, key);
         LongOrderedMap<V> fst = new LongOrderedMap<>(p.getFirst());
         LongOrderedMap<V> snd = new LongOrderedMap<>(p.getSecond());
         root = snd.root;
@@ -264,7 +264,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
      */
     public LongObjEntry<V> removeKthEntry(int k) {
         if (k < 0 || k >= size()) return null;
-        MutablePair<RBST<V>, LongObjEntry<V>> nodeAndEntry = RBST.eraseUsingIndex(root, k);
+        Pair<RBST<V>, LongObjEntry<V>> nodeAndEntry = RBST.eraseUsingIndex(root, k);
         root = nodeAndEntry.getFirst();
         return nodeAndEntry.getSecond();
     }
@@ -278,7 +278,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
      */
     public LongObjEntry<V> remove(long key) {
         if (!containsKey(key)) return null;
-        MutablePair<RBST<V>, LongObjEntry<V>> nodeAndEntry = RBST.eraseUsingKey(root, key);
+        Pair<RBST<V>, LongObjEntry<V>> nodeAndEntry = RBST.eraseUsingKey(root, key);
         root = nodeAndEntry.getFirst();
         return nodeAndEntry.getSecond();
     }
@@ -295,7 +295,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
         LongObjEntry<V> e = RBST.getEntry(root, key);
         if (e == null) return false;
         if (Objects.equals(value, e.getValue())) {
-            MutablePair<RBST<V>, LongObjEntry<V>> nodeAndEntry = RBST.eraseUsingKey(root, key);
+            Pair<RBST<V>, LongObjEntry<V>> nodeAndEntry = RBST.eraseUsingKey(root, key);
             root = nodeAndEntry.getFirst();
             return true;
         }
@@ -644,21 +644,21 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
          * @return 分解してできる二本の木のペア
          * @throws IndexOutOfBoundsException {@code k < 0 || k > size(x)} の場合
          */
-        static <V> MutablePair<RBST<V>, RBST<V>> splitUsingIndex(RBST<V> x, int k) {
+        static <V> Pair<RBST<V>, RBST<V>> splitUsingIndex(RBST<V> x, int k) {
             if (k < 0 || k > size(x)) {
                 throw new IndexOutOfBoundsException(
                     String.format("index %d is out of bounds for the length of %d", k, size(x))
                 );
             }
             if (x == null) {
-                return new MutablePair<RBST<V>, RBST<V>>(null, null);
+                return new Pair<RBST<V>, RBST<V>>(null, null);
             } else if (k <= size(x.l)) {
-                MutablePair<RBST<V>, RBST<V>> p = splitUsingIndex(x.l, k);
+                Pair<RBST<V>, RBST<V>> p = splitUsingIndex(x.l, k);
                 x.l = p.getSecond();
                 p.setSecond(x.update());
                 return p;
             } else {
-                MutablePair<RBST<V>, RBST<V>> p = splitUsingIndex(x.r, k - size(x.l) - 1);
+                Pair<RBST<V>, RBST<V>> p = splitUsingIndex(x.r, k - size(x.l) - 1);
                 x.r = p.getFirst();
                 p.setFirst(x.update());
                 return p;
@@ -672,16 +672,16 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
          * @param key 境界となるキー
          * @return 分解してできる二本の木のペア
          */
-        static <V> MutablePair<RBST<V>, RBST<V>> splitUsingKey(RBST<V> x, long key) {
+        static <V> Pair<RBST<V>, RBST<V>> splitUsingKey(RBST<V> x, long key) {
             if (x == null) {
-                return new MutablePair<RBST<V>, RBST<V>>(null, null);
+                return new Pair<RBST<V>, RBST<V>>(null, null);
             } else if (key <= x.getKeyAsLong()) {
-                MutablePair<RBST<V>, RBST<V>> p = splitUsingKey(x.l, key);
+                Pair<RBST<V>, RBST<V>> p = splitUsingKey(x.l, key);
                 x.l = p.getSecond();
                 p.setSecond(x.update());
                 return p;
             } else {
-                MutablePair<RBST<V>, RBST<V>> p = splitUsingKey(x.r, key);
+                Pair<RBST<V>, RBST<V>> p = splitUsingKey(x.r, key);
                 x.r = p.getFirst();
                 p.setFirst(x.update());
                 return p;
@@ -697,7 +697,7 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
          * @return 挿入して更新された {@code t}
          */
         static <V> RBST<V> insert(RBST<V> t, long key, V val) {
-            MutablePair<RBST<V>, RBST<V>> p = splitUsingKey(t, key);
+            Pair<RBST<V>, RBST<V>> p = splitUsingKey(t, key);
             return RBST.merge(RBST.merge(p.getFirst(), new RBST<>(key, val)), p.getSecond());
         }
 
@@ -709,10 +709,10 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
          * @return 削除して更新された {@code t}
          * @throws IndexOutOfBoundsException {@code k < 0 || k > size(t)} の場合
          */
-        static <V> MutablePair<RBST<V>, LongObjEntry<V>> eraseUsingIndex(RBST<V> t, int k) {
-            MutablePair<RBST<V>, RBST<V>> p = splitUsingIndex(t, k);
-            MutablePair<RBST<V>, RBST<V>> q = splitUsingIndex(p.getSecond(), 1);
-            return new MutablePair<>(RBST.merge(p.getFirst(), q.getSecond()), q.getFirst());
+        static <V> Pair<RBST<V>, LongObjEntry<V>> eraseUsingIndex(RBST<V> t, int k) {
+            Pair<RBST<V>, RBST<V>> p = splitUsingIndex(t, k);
+            Pair<RBST<V>, RBST<V>> q = splitUsingIndex(p.getSecond(), 1);
+            return new Pair<>(RBST.merge(p.getFirst(), q.getSecond()), q.getFirst());
         }
 
         /**
@@ -722,10 +722,10 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
          * @param key 削除するエントリのキー
          * @return 削除して更新された {@code t}
          */
-        static <V> MutablePair<RBST<V>, LongObjEntry<V>> eraseUsingKey(RBST<V> t, long key) {
-            MutablePair<RBST<V>, RBST<V>> p = splitUsingKey(t, key);
-            MutablePair<RBST<V>, RBST<V>> q = splitUsingIndex(p.getSecond(), 1);
-            return new MutablePair<>(RBST.merge(p.getFirst(), q.getSecond()), q.getFirst());
+        static <V> Pair<RBST<V>, LongObjEntry<V>> eraseUsingKey(RBST<V> t, long key) {
+            Pair<RBST<V>, RBST<V>> p = splitUsingKey(t, key);
+            Pair<RBST<V>, RBST<V>> q = splitUsingIndex(p.getSecond(), 1);
+            return new Pair<>(RBST.merge(p.getFirst(), q.getSecond()), q.getFirst());
         }
 
         /**
@@ -763,19 +763,19 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
         static <V> Set<LongObjEntry<V>> entrySet(RBST<V> t) {
             LinkedHashSet<LongObjEntry<V>> set = new LinkedHashSet<>();
             if (t == null) return set;
-            ArrayDeque<IntObjEntry<RBST<V>>> stack = new ArrayDeque<>();
-            if (t.r != null) stack.addLast(new IntObjEntry<>(0, t.r));
-            stack.addLast(new IntObjEntry<>(1, t));
-            if (t.l != null) stack.addLast(new IntObjEntry<>(0, t.l));
+            ArrayDeque<IntObjPair<RBST<V>>> stack = new ArrayDeque<>();
+            if (t.r != null) stack.addLast(new IntObjPair<>(0, t.r));
+            stack.addLast(new IntObjPair<>(1, t));
+            if (t.l != null) stack.addLast(new IntObjPair<>(0, t.l));
             while (stack.size() > 0) {
-                IntObjEntry<RBST<V>> p = stack.pollLast();
-                RBST<V> u = p.getValue();
-                if (p.getKeyAsInt() == 1) {
+                IntObjPair<RBST<V>> p = stack.pollLast();
+                RBST<V> u = p.getSecond();
+                if (p.getFirstAsInt() == 1) {
                     set.add(u);
                 } else {
-                    if (u.r != null) stack.addLast(new IntObjEntry<>(0, u.r));
-                    stack.addLast(new IntObjEntry<>(1, u));
-                    if (u.l != null) stack.addLast(new IntObjEntry<>(0, u.l));
+                    if (u.r != null) stack.addLast(new IntObjPair<>(0, u.r));
+                    stack.addLast(new IntObjPair<>(1, u));
+                    if (u.l != null) stack.addLast(new IntObjPair<>(0, u.l));
                 }
             }
             return set;
@@ -790,19 +790,19 @@ public class LongOrderedMap<V> implements Iterable<LongObjEntry<V>> {
         static <V> Set<LongObjEntry<V>> descendingEntrySet(RBST<V> t) {
             LinkedHashSet<LongObjEntry<V>> set = new LinkedHashSet<>();
             if (t == null) return set;
-            ArrayDeque<IntObjEntry<RBST<V>>> stack = new ArrayDeque<>();
-            if (t.l != null) stack.addLast(new IntObjEntry<>(0, t.l));
-            stack.addLast(new IntObjEntry<>(1, t));
-            if (t.r != null) stack.addLast(new IntObjEntry<>(0, t.r));
+            ArrayDeque<IntObjPair<RBST<V>>> stack = new ArrayDeque<>();
+            if (t.l != null) stack.addLast(new IntObjPair<>(0, t.l));
+            stack.addLast(new IntObjPair<>(1, t));
+            if (t.r != null) stack.addLast(new IntObjPair<>(0, t.r));
             while (stack.size() > 0) {
-                IntObjEntry<RBST<V>> p = stack.pollLast();
-                RBST<V> u = p.getValue();
-                if (p.getKeyAsInt() == 1) {
+                IntObjPair<RBST<V>> p = stack.pollLast();
+                RBST<V> u = p.getSecond();
+                if (p.getFirstAsInt() == 1) {
                     set.add(u);
                 } else {
-                    if (u.l != null) stack.addLast(new IntObjEntry<>(0, u.l));
-                    stack.addLast(new IntObjEntry<>(1, u));
-                    if (u.r != null) stack.addLast(new IntObjEntry<>(0, u.r));
+                    if (u.l != null) stack.addLast(new IntObjPair<>(0, u.l));
+                    stack.addLast(new IntObjPair<>(1, u));
+                    if (u.r != null) stack.addLast(new IntObjPair<>(0, u.r));
                 }
             }
             return set;

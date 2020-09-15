@@ -158,6 +158,7 @@ public class LongLazySegmentTree {
     public long get(int i) {
         rangeCheck(i);
         int k = 1;
+        calcDat(k);
         int l = 0, r = N;
         while (k < N) {
             int kl = k << 1 | 0;
