@@ -32,19 +32,20 @@ author: <https://atcoder.jp/users/suisen>
 
 ## package `graph`
 
-木を除くグラフに関するパッケージ．
+木を除くグラフに関するパッケージ．以下，頂点数を V，辺数を E とします．
 
 |class|概要|
 |-|-|
-|[BCC](./graph/BCC.java)|二重辺連結成分分解を行う．頂点数を N，辺数を M として 計算量は &Theta;(N+M)．|
-|[BellmanFord](./graph/BellmanFord.java)|ベルマンフォード法により単一始点最短経路問題 (SSSP) を解く．辺の重みが負であってもよい．頂点数を N，辺数を M として 計算量は &Theta;(MN)．|
-|[Dijkstra](./graph/Dijkstra.java)|ダイクストラ法により単一始点最短経路問題 (SSSP) を解く．但し，辺の重みが負であってはならない．頂点数を N，辺数を M として 計算量は &Theta;((M+N)logN)．|
+|[BCC](./graph/BCC.java)|二重辺連結成分分解を行う．&Theta;(E+V)．|
+|[BellmanFord](./graph/BellmanFord.java)|ベルマンフォード法により単一始点最短経路問題 (SSSP) を解く．辺の重みが負であってもよい．頂点数を N，辺数を M として 計算量は &Theta;(EV)．|
+|[Dijkstra](./graph/Dijkstra.java)|ダイクストラ法により単一始点最短経路問題 (SSSP) を解く．但し，辺の重みが負であってはならない．頂点数を N，辺数を M として 計算量は &Theta;((E+V)logV)．|
 |[Graph](./graph/Graph.java)|グラフを表現するための基本的なクラスのまとめ．|
-|[MaxFlow](./graph/MaxFlow.java)|最大流問題を解きます．Ford Fulkerson のアルゴリズムと Dinic のアルゴリズムが実装されています．<br>Ford Fulkerson の計算量は，流量を F，辺数を E として &Theta;(FE) です．<br>Dinic の計算量は，頂点数を V，辺数を E とすると，一般の場合では O(EV^2) です．ただし，多くのケースでは高速に動作します．また，二部グラフや容量一定のグラフではオーダーレベルで計算量が改善されます．|
-|[MinCostFlow](./graph/MinCostFlow.java)|最小費用流問題を Primal-Dual 法により解きます．本実装では負辺に対応していません．計算量は，流量 F，頂点数 V，辺数 E として &Theta;(F(V+E)logV) です．|
-|[Kruskal](./graph/Kruskal.java)|クラスカル法により最小全域木 (MST) を構築する．頂点数を N，辺数を M として 計算量は &Theta;(MlogN)．|
-|[Prim](./graph/Prim.java)|プリム法により最小全域木 (MST) を構築する．頂点数を N，辺数を M として 計算量は &Theta;(MlogN)．|
-|[SCC](./graph/SCC.java)|強連結成分分解を行う．頂点数を N，辺数を M として 計算量は &Theta;(N+M)．|
+|[MaxFlow](./graph/MaxFlow.java)|最大流問題を解きます．Ford Fulkerson のアルゴリズムと Dinic のアルゴリズムが実装されています．<br>Ford Fulkerson の計算量は，流量を F として &Theta;(FE) です．<br>Dinic の計算量は，一般の場合では &Theta;(EV^2) です．ただし，多くのケースでは高速に動作します．また，二部グラフや容量一定のグラフではオーダーレベルで計算量が改善されます．|
+|[MinCostFlow](./graph/MinCostFlow.java)|最小費用流問題を Primal-Dual 法により解きます．本実装では負辺に対応していません．計算量は，流量 F，頂点数 V，辺数 E として &Theta;(F(E+V)logV) です．|
+|[Kruskal](./graph/Kruskal.java)|クラスカル法により最小全域木 (MST) を構築する．計算量は &Theta;(ElogV)．|
+|[Prim](./graph/Prim.java)|プリム法により最小全域木 (MST) を構築する．計算量は &Theta;(ElogV)．|
+|[SCC](./graph/SCC.java)|強連結成分分解を行う．計算量は &Theta;(E+V)．|
+|[TopologicalSort](./graph/TopologicalSort.java)|トポロジカルソートを行います．有向閉路があればその旨を報告します．計算量は &Theta;(E+V) です．|
 
 ## package `integer`
 
@@ -57,11 +58,11 @@ author: <https://atcoder.jp/users/suisen>
 
 ## package `tree`
 
-木関連のパッケージ．
+木関連のパッケージ．以下，頂点数を N とします．
 
 |class|概要|
 |-|-|
-|[Diameter](tree/Diameter.java)|木の最遠点対 (1 つ) とその距離を計算する．計算量は，頂点数を N として &Theta;(N)．|
+|[Diameter](tree/Diameter.java)|木の最遠点対 (1 つ) とその距離を計算する．計算量は &Theta;(N)．|
 |[DoublingLCA](./tree/DoublingLCA.java)|LCA を Doubling を用いて <&Theta;(NlogN), &Theta;(logN)> で求める．|
 |[EulerTour](./tree/EulerTour.java)|これは名前が良くないと思うので説明は保留．(アーベル群の要件を満たす二項演算のパス上畳み込みを，SegTree 等を用いることで O(logN) で行うことが出来るので結構強い．アーベル群を仮定する分 HLD より使いやすくて計算量も良い．)|
 |[EulerTourLCA](./tree/EulerTourLCA.java)|LCA を EulerTour + SegTree を用いて <&Theta;(N), &Theta;(logN)> で求める．体感では Doubling よりも速い．|
