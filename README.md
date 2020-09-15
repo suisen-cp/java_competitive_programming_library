@@ -55,6 +55,19 @@ author: <https://atcoder.jp/users/suisen>
 |[DiscreteLogarithm](./integer/DiscreteLogarithm.java)|離散対数問題を解くクラス．剰余の法を P として計算量は &Theta;(&Sqrt;P)．|
 |[ModArithmetic](./integer/ModArithmetic.java)|剰余演算関連をまとめたクラス．乗法逆元の計算や二分累乗法などの実装を含む．|
 
+## package `tree`
+
+木関連のパッケージ．
+
+|class|概要|
+|-|-|
+|[Diameter](tree/Diameter.java)|木の最遠点対 (1 つ) とその距離を計算する．計算量は，頂点数を N として &Theta;(N)．|
+|[DoublingLCA](./tree/DoublingLCA.java)|LCA を Doubling を用いて <&Theta;(NlogN), &Theta;(logN)> で求める．|
+|[EulerTour](./tree/EulerTour.java)|これは名前が良くないと思うので説明は保留．(アーベル群の要件を満たす二項演算のパス上畳み込みを，SegTree 等を用いることで O(logN) で行うことが出来るので結構強い．アーベル群を仮定する分 HLD より使いやすくて計算量も良い．)|
+|[EulerTourLCA](./tree/EulerTourLCA.java)|LCA を EulerTour + SegTree を用いて <&Theta;(N), &Theta;(logN)> で求める．体感では Doubling よりも速い．|
+|[HLD](./tree/HLD.java)|Heavy-Light-Decomposition．任意のパスを &Theta;(logN) 個のパスに分解することで，パスに対するクエリを列に対するクエリとして効率的に処理することが出来る．例えば SegTree を載せる場合，一点更新および区間取得を O((logN)^2) で行うことが可能である．|
+|[Tree](./tree/Tree.java)|木の基本的なクラス．本実装では木の build 時に dfs を行い，parent，preorder，postorder を前計算する．これによって，多くの木上探索で記述を容易にすることが出来る．|
+
 ## package `util`
 
 `Pair` 等のユーティリティクラスのパッケージ．アルゴリズム / データ構造の実装の際に補助的に用いる程度．
